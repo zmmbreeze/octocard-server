@@ -1,0 +1,17 @@
+{
+    "port": 8080,
+    "database": {
+        "url": "mongodb://localhost/github-card"
+    },
+    "github": {
+        "clientId": "",
+        "clientSecret": ""
+    },
+    "dataTTL": 3600,
+    "logfilename": "github-cafe.log",
+    "session": {
+        "key": "sid",
+        "secret": "github-card",
+        "maxAge": 2592000000
+    }
+}
