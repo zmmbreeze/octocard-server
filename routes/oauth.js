@@ -3,6 +3,7 @@
  * GET login / auth page.
  */
 
+var Q = require('q');
 var nconf = require('nconf');
 var github = require('octonode');
 var User = require('../models/User');
@@ -36,26 +37,24 @@ oauth.callback = function(req, res) {
         res.type('text/plain');
         res.send('');
     } else {
-        github.auth.login(values.code, function (err, token) {
-            res.status(200);
-            res.type('text/plain');
-            if (err) {
+        Q.ninvoke(github.auth, 'login', values.code)
+            .fail(function (err) {
                 winston.error(err.message);
-                res.render('error', { err: 'err.message' });
-                return;
-            }
-
-            // create user
-            User.createByToken(token, function (err, user) {
-                if (err) {
-                    res.render('error', { err: 'err.message' });
-                    return;
-                }
-                req.session.authState = null;
-                req.session.loginName = user.login;
-                res.redirect(302, '/');
+                res.render('error', { error: err.message });
+            })
+            .done(function (token) {
+                // create user
+                User.createByToken(token)
+                    .fail(function (err) {
+                        winston.error(err.message);
+                        res.render('error', { error: err.message });
+                    })
+                    .done(function (user) {
+                        req.session.authState = null;
+                        req.session.loginName = user.login;
+                        res.redirect(302, '/');
+                    });
             });
-        });
     }
 };
 
