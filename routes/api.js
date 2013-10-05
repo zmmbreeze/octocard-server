@@ -56,7 +56,6 @@ var rejectGetDataError = function (data) {
         winston.error(err.message);
         data.success = false;
         data.message = err.message;
-        throw err;
     };
 };
 

@@ -65,6 +65,7 @@ userSchema.statics.findByLogin = function (loginName) {
  * @return {Object} promise .
  */
 userSchema.statics.createByToken = function (token) {
+    var that = this;
     return Q.ninvoke(this, 'findOne', {token: token})
         .then(function (user) {
             if (user) {
@@ -88,6 +89,12 @@ userSchema.statics.createByToken = function (token) {
                     return Q.ninvoke(user, 'save');
                 })
                 .spread(function (user) {
+                    // get other data
+                    // to make server response faster
+                    var loginName = user.login;
+                    that.getReposData();
+                    that.getOrgsData();
+                    that.getEventsStatisData();
                     return user;
                 });
         });
@@ -97,11 +104,11 @@ var githubApi = {
     /**
      * Get all events data by login name and token.
      *
-     * @param {string} loginName .
      * @param {string} token .
+     * @param {string} loginName .
      * @return {Object} promise
      */
-    getAllEventsData: function (loginName, token) {
+    getAllEventsData: function (token, loginName) {
         var page = 1;
         var results = [];
         /**
@@ -169,21 +176,23 @@ var githubApi = {
 // cache all github api
 // merge all request to one, if they are in the almost same time
 // to save request resource and github api rate limit
+// NOTE: all api method's first param must be token string
 for (var method in githubApi) {
     githubApi[method] = (function (oldApi) {
-        return function newApi() {
-            if (newApi.promise) {
-                // use sended request
-                return newApi.promise;
+        var promises = {};
+        return function(token) {
+            if (promises[token]) {
+                // use processing request
+                return promises[token];
             }
 
             // do request
-            newApi.promise = oldApi.apply(githubApi, arguments)
+            promises[token] = oldApi.apply(githubApi, arguments)
                 .then(function (data) {
-                    newApi.promise = null;
+                    promises[token] = null;
                     return data;
                 });
-            return newApi.promise;
+            return promises[token];
         };
     })(githubApi[method]);
 }
@@ -329,7 +338,7 @@ userSchema.statics.getEventsStatisData = function (loginName) {
 
             // if cache outof time
             // get the newest data
-            var promise = githubApi.getAllEventsData(loginName, user.token)
+            var promise = githubApi.getAllEventsData(user.token, loginName)
                 .then(function (events) {
                     // count statistic
                     var statisData = {};
