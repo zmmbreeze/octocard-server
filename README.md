@@ -1,36 +1,5 @@
 
 
-# Node Apps
-## Express boilerplate
-
-[http://expressjs.com](http://express.js.com)
-
-![](https://github.com/nodeapps/boilerplates/raw/master/screenshots/express.png)
-
-# Installation
-
-    mkdir myapp
-    cd myapp/
-    jitsu install express
-
-*If you do not have `jitsu` installed you can install it via `npm install jitsu -g`*
-
-
-# Usage
-
-### Starting boilerplate locally
-
-    node app.js
-
-*Now you can visit http://localhost:8080 to view your application*
-
-### Deploy boilerplate to nodejitsu
-
-    jitsu deploy
-
-*You will now be prompted for a `subdomain` to deploy your application on*
-
-
 # License
 
 (The MIT License)
