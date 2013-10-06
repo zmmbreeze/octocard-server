@@ -1,17 +1,18 @@
 {
     "port": 8080,
     "database": {
-        "url": "mongodb://localhost/github-card"
+        "url": "mongodb://localhost/octocard"
     },
     "github": {
         "clientId": "",
         "clientSecret": ""
     },
     "dataTTL": 3600,
-    "logfilename": "github-cafe.log",
+    "logfilename": "octocard.log",
     "session": {
         "key": "sid",
-        "secret": "github-card",
+        "secret": "octocard",
         "maxAge": 2592000000
     }
 }
+
