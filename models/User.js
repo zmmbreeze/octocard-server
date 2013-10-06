@@ -104,11 +104,10 @@ var githubApi = {
     /**
      * Get all events data by login name and token.
      *
-     * @param {string} token .
-     * @param {string} loginName .
+     * @param {User} user .
      * @return {Object} promise
      */
-    getAllEventsData: function (token, loginName) {
+    getAllEventsData: function (user) {
         var page = 1;
         var results = [];
         /**
@@ -126,8 +125,8 @@ var githubApi = {
         // get all events data
         // github event api only can get 300 latest events.
         function getAllEvents() {
-            var apiUrl = '/users/' + loginName + '/events';
-            return Q.ninvoke(github.client(token), 'get', apiUrl, page)
+            var apiUrl = '/users/' + user.login + '/events';
+            return Q.ninvoke(github.client(user.token), 'get', apiUrl, page)
                 .spread(function (status, events, header) {
                     concatArray(results, events);
 
@@ -142,34 +141,96 @@ var githubApi = {
                 });
         }
 
-        return getAllEvents();
+        return getAllEvents()
+            .then(function (events) {
+                // count statistic
+                var statisData = {};
+                events.forEach(function (event) {
+                    var eventDate = new Date(event.created_at);
+                    var dateStr = eventDate.toDateString();
+                    if (statisData[dateStr]) {
+                        statisData[dateStr].counter++;
+                    } else {
+                        // first counter
+                        statisData[dateStr] = {
+                            date: eventDate,
+                            counter: 1
+                        };
+                    }
+                });
+
+                // change map to array
+                var statisDataArray = [];
+                for (var key in statisData) {
+                    statisDataArray.push(statisData[key]);
+                }
+
+                user.eventsStatisData = {
+                    data: statisDataArray,
+                    saveTime: Date.now()
+                };
+                return Q.ninvoke(user, 'save');
+            })
+            .spread(function (user) {
+                return user.eventsStatisData.data;
+            });
     },
     /**
      * Get user info by token
      *
-     * @param {string} token .
+     * @param {User} user .
      * @return {Object} promise .
      */
-    getUserData: function (token) {
-        return Q.ninvoke(github.client(token).me(), 'info');
+    getUserData: function (user) {
+        return Q.ninvoke(github.client(user.token).me(), 'info')
+            .then(function (data) {
+                user.userData = {
+                    data: data,
+                    saveTime: Date.now()
+                };
+                return Q.ninvoke(user, 'save');
+            })
+            .spread(function (user) {
+                return user.userData.data;
+            });
     },
     /**
      * Get user's repo info by token
      *
-     * @param {string} token .
+     * @param {User} user .
      * @return {Object} promise .
      */
-    getReposData: function (token) {
-        return Q.ninvoke(github.client(token).me(), 'repos');
+    getReposData: function (user) {
+        return Q.ninvoke(github.client(user.token).me(), 'repos')
+            .then(function (data) {
+                user.reposData = {
+                    data: data,
+                    saveTime: Date.now()
+                };
+                return Q.ninvoke(user, 'save');
+            })
+            .spread(function (user) {
+                return user.reposData.data;
+            });
     },
     /**
      * Get user's orgs info by token
      *
-     * @param {string} token .
+     * @param {User} user .
      * @return {Object} promise .
      */
-    getOrgsData: function (token) {
-        return Q.ninvoke(github.client(token).me(), 'orgs');
+    getOrgsData: function (user) {
+        return Q.ninvoke(github.client(user.token).me(), 'orgs')
+            .then(function (data) {
+                user.orgsData = {
+                    data: data,
+                    saveTime: Date.now()
+                };
+                return Q.ninvoke(user, 'save');
+            })
+            .spread(function (user) {
+                return user.orgsData.data;
+            });
     }
 };
 
@@ -180,7 +241,8 @@ var githubApi = {
 for (var method in githubApi) {
     githubApi[method] = (function (oldApi) {
         var promises = {};
-        return function(token) {
+        return function(user) {
+            var token = user.token;
             if (promises[token]) {
                 // use processing request
                 return promises[token];
@@ -214,17 +276,7 @@ userSchema.statics.getUserData = function (loginName) {
                 return userData.data;
             }
 
-            var promise = githubApi.getUserData(user.token)
-                .then(function (data) {
-                    user.userData = {
-                        data: data,
-                        saveTime: Date.now()
-                    };
-                    return Q.ninvoke(user, 'save');
-                })
-                .spread(function (user) {
-                    return user.userData.data;
-                });
+            var promise = githubApi.getUserData(user);
 
             if (userData && userData.data && userData.saveTime) {
                 // use old orgsData if exist
@@ -255,17 +307,7 @@ userSchema.statics.getReposData = function (loginName) {
 
             // if cache outof time
             // get the newest data
-            var promise = githubApi.getReposData(user.token)
-                .then(function (data) {
-                    user.reposData = {
-                        data: data,
-                        saveTime: Date.now()
-                    };
-                    return Q.ninvoke(user, 'save');
-                })
-                .spread(function (user) {
-                    return user.reposData.data;
-                });
+            var promise = githubApi.getReposData(user);
 
             if (reposData && reposData.data && reposData.saveTime) {
                 // use old orgsData if exist
@@ -296,17 +338,7 @@ userSchema.statics.getOrgsData = function (loginName) {
 
             // if cache outof time
             // get the newest data
-            var promise = githubApi.getOrgsData(user.token)
-                .then(function (data) {
-                    user.orgsData = {
-                        data: data,
-                        saveTime: Date.now()
-                    };
-                    return Q.ninvoke(user, 'save');
-                })
-                .spread(function (user) {
-                    return user.orgsData.data;
-                });
+            var promise = githubApi.getOrgsData(user);
 
             if (orgsData && orgsData.data && orgsData.saveTime) {
                 // use old orgsData if exist
@@ -338,39 +370,7 @@ userSchema.statics.getEventsStatisData = function (loginName) {
 
             // if cache outof time
             // get the newest data
-            var promise = githubApi.getAllEventsData(user.token, loginName)
-                .then(function (events) {
-                    // count statistic
-                    var statisData = {};
-                    events.forEach(function (event) {
-                        var eventDate = new Date(event.created_at);
-                        var dateStr = eventDate.toDateString();
-                        if (statisData[dateStr]) {
-                            statisData[dateStr].counter++;
-                        } else {
-                            // first counter
-                            statisData[dateStr] = {
-                                date: eventDate,
-                                counter: 1
-                            };
-                        }
-                    });
-
-                    // change map to array
-                    var statisDataArray = [];
-                    for (var key in statisData) {
-                        statisDataArray.push(statisData[key]);
-                    }
-
-                    user.eventsStatisData = {
-                        data: statisDataArray,
-                        saveTime: Date.now()
-                    };
-                    return Q.ninvoke(user, 'save');
-                })
-                .spread(function (user) {
-                    return user.eventsStatisData.data;
-                });
+            var promise = githubApi.getAllEventsData(user);
 
             if (eventsStatisData
                 && eventsStatisData.data
