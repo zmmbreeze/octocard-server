@@ -26,6 +26,14 @@
     "url": "https://raw.github.com/zmmbreeze/octocard-server/master/MIT-LICENTSE.txt"
   },
   "dependencies": {
+    "q": "~0.9.7",
+    "octonode": "~0.3.5",
+    "express": "~3.4.0",
+    "nconf": "~0.6.7",
+    "mongoose": "~3.6.20",
+    "winston": "~0.7.2",
+    "connect-mongo": "~0.3.3",
+    "jade": "~0.35.0"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
@@ -36,4 +44,3 @@
     "grunt-contrib-clean": "*"
   }
 }
-
