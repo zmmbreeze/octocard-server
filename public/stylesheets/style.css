@@ -2,17 +2,15 @@ body {
     margin: 0 auto;
     padding: 1em;
     max-width: 640px;
-    font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
-    color: #FD5947;
-    background-color: #FEEEB3;
+    font: 16px "Libre Baskerville", "Lucida Grande", Helvetica, Arial, sans-serif;
+    color: #666;
 }
 
 h1,
 h2 {
-    margin: 0;
+    margin: 1em 0;
     font-size: 2em;
     line-height: 1em;
-    color: #F70340;
 }
 h2 {
     font-size: 1.5em;
@@ -33,13 +31,65 @@ li {
 
 em {
     font-style: normal;
-    color: #EC8195;
 }
 
 a {
+    color: #4A89DC;
     text-decoration: none;
-    color: #30AFA2;
 }
 a:hover {
     text-decoration: underline;
+}
+
+.prettyprint {
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: auto !important;
+    border: none !important;
+    font-size: 14px;
+}
+.prettyprint a .com {
+    color: #4A89DC;
+}
+
+.loginBtn {
+    margin-bottom: 6px;
+    display: inline-block;
+    padding: 5px;
+    line-height: 24px;
+    color: #FFF;
+    background-color: #5D9CEC;
+    -webkit-box-shadow: 1px 0px 1px #4A89DC,
+        2px 1px 1px #4A89DC,
+        3px 2px 1px #4A89DC,
+        4px 3px 1px #4A89DC,
+        0px 1px 1px #4A89DC,
+        1px 2px 1px #4A89DC,
+        2px 3px 1px #4A89DC,
+        3px 4px 1px #4A89DC;
+    box-shadow: 1px 0px 1px #4A89DC,
+        2px 1px 1px #4A89DC,
+        3px 2px 1px #4A89DC,
+        4px 3px 1px #4A89DC,
+        0px 1px 1px #4A89DC,
+        1px 2px 1px #4A89DC,
+        2px 3px 1px #4A89DC,
+        3px 4px 1px #4A89DC;
+}
+.loginBtn:hover {
+    background-color: #4A89DC;
+    text-decoration: none;
+}
+.loginBtn:active {
+    position: relative;
+    top: 2px;
+    left: 2px;
+    -webkit-box-shadow: 1px 0px 1px #4A89DC,
+        2px 1px 1px #4A89DC,
+        0px 1px 1px #4A89DC,
+        1px 2px 1px #4A89DC;
+    box-shadow: 1px 0px 1px #4A89DC,
+        2px 1px 1px #4A89DC,
+        0px 1px 1px #4A89DC,
+        1px 2px 1px #4A89DC;
 }

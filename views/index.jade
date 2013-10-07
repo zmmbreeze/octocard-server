@@ -1,5 +1,89 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+    link(rel="stylesheet", href="http://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.min.css")
+    h1
+        | Welcome to use 
+        em #{title}
+    p
+        | Highly flexible github info card for every github lover. And it's open source. Please feel free to <a href="https://github.com/zmmbreeze/octocard">fork</a> and build your own <strong>Octocard</strong>.
+
+    h2 Features
+    ul
+        li Show your public github info on your website.
+        li Responsive. Resizing your browser to test it.
+        li Easy to customize.
+        li Open source, you can even build your own 
+            a(href="https://github.com/zmmbreeze/octocard-server") Octocard server.
+
+    h2 Example
+    div#octocard
+
+    h2 How to use
+    ol
+        li: a.loginBtn(href="/login") Login/Sign Up with Github
+        li
+            | Customize and copy the following html code to your website.
+            pre.prettyprint.lang-html: code
+                = '<div id="octocard"></div>\n'
+                = '<script>\n'
+                = 'OCTOCARD = {\n'
+                = '  // [required][string] Username.\n'
+                |   name: '#{loginName}',
+                = '\n'
+                = '\n'
+                = '  // [optional][string]\n'
+                = '  // Used module names, default is:\n'
+                = '  //   `base,details,stats,repos,contributions,orgs`.\n'
+                = '  // You can change the order or remove module if you don\'t want.\n'
+                = '  // modules: \'base,details,stats,repos,orgs,eventsStatis\',\n'
+                = '\n'
+                = '  // [optional][number] Number of repos to be shown.\n'
+                = '  // `3` as default\n'
+                = '  // reposNum: 4,\n'
+                = '\n'
+                = '  // [optional][number] Number of organizations to be shown.\n'
+                = '  // `-1` as default, represent showing all organizations.\n'
+                = '  // orgsNum: -1,\n'
+                = '\n'
+                = '  // [optional][string|Element]\n'
+                = '  // element or elementId, `octocard` as default.\n'
+                = '  // element: \'octocard\',\n'
+                = '\n'
+                = '  // [optional][string]url of jsonp api\n'
+                = '  // `http://octocard.info/api` as default.\n'
+                |   // If your use your own 
+                a(href="https://github.com/zmmbreeze/octocard-server", target="_blank")
+                    | octocard-server
+                | , change it.
+                = '\n'
+                = '  // api: \'http://your-octocard-server.com/api\'\n'
+                = '};\n'
+                = '</script>\n'
+                = '<script src="http://nodejs.in/octocard/bin/octocard.js"></script>'
+
+    h2 Safety?
+    ul
+        li Octocard only access your public github info.
+        li It is an open source project.
+        li If you have a web server which installed node and mongodb, you can build your own 
+            a(href="https://github.com/zmmbreeze/octocard-server") Octocard server.
+
+    h2 More!
+    ul
+        li Customize 
+            a(href="https://github.com/zmmbreeze/octocard") Octocard theme.
+        li Build your own 
+            a(href="https://github.com/zmmbreeze/octocard-server") Octocard server.
+        li More features coming soon!
+
+    <a href="https://github.com/zmmbreeze/octocard"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    script.
+        OCTOCARD = {
+            name: 'zmmbreeze',
+            api: '/api'
+        };
+    script(src="http://nodejs.in/octocard/bin/octocard.js")
+    script(src="http://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js")
+    script prettyPrint();

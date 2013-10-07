@@ -7,7 +7,7 @@
         "clientId": "",
         "clientSecret": ""
     },
-    "dataTTL": 3600,
+    "dataTTL": 3600000,
     "logfilename": "octocard.log",
     "session": {
         "key": "sid",
