@@ -1,3 +1,4 @@
+/*jshint laxbreak:true */
 
 /*
  * GET login / auth page.
@@ -10,6 +11,10 @@ var User = require('../models/User');
 var winston = require('winston');
 
 var oauth = {};
+var redirectUri = nconf.get('redirect_uri');
+if (redirectUri) {
+    redirectUri = encodeURIComponent(redirectUri);
+}
 
 oauth.login = function(req, res) {
     if (req.session.loginName) {
@@ -19,9 +24,11 @@ oauth.login = function(req, res) {
     }
     // oauth login url
     var authUrl = github.auth.config({
-        id: nconf.get('github:clientId'),
-        secret: nconf.get('github:clientSecret')
-    }).login(['user', 'public_repo']);
+            id: nconf.get('github:clientId'),
+            secret: nconf.get('github:clientSecret')
+        })
+        .login(['user', 'public_repo'])
+        + (redirectUri ? ('&redirect_uri=' + redirectUri) : '');
     // Store info to verify against CSRF
     req.session.authState = authUrl.match(/&state=([0-9a-z]{32})/i)[1];
     res.redirect(302, authUrl);
@@ -29,6 +36,12 @@ oauth.login = function(req, res) {
 
 oauth.callback = function(req, res) {
     var values = req.query;
+    if (values.error) {
+        winston.error(values.error);
+        res.render('error', { error: values.error });
+        return;
+    }
+
     var state = req.session.authState;
 
     // Check against CSRF attacks

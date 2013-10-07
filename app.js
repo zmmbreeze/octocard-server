@@ -88,6 +88,6 @@ db.on('error', function () {
 db.on('open', function () {
     winston.info('Mongodb connected!');
     app.listen(app.get('port'), function () {
-        winston.info('Github-card server listening on port ' + app.get('port'));
+        winston.info('Octocard server listening on port ' + app.get('port'));
     });
 });
