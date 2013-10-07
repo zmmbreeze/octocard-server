@@ -36,6 +36,8 @@ app.configure(function () {
     app.set('port', port);
     app.set('views', __dirname + '/views');
     app.set('view engine', 'jade');
+    // behind nginx
+    app.enable('trust proxy');
     app.use(express.favicon());
     app.use(express.logger({
         stream: {
