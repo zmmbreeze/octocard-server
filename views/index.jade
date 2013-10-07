@@ -20,47 +20,51 @@ block content
     div#octocard
 
     h2 How to use
-    ol
-        li: a.loginBtn(href="/login") Login/Sign Up with Github
-        li
-            | Customize and copy the following html code to your website.
-            pre.prettyprint.lang-html: code
-                = '<div id="octocard"></div>\n'
-                = '<script>\n'
-                = 'OCTOCARD = {\n'
-                = '  // [required][string] Username.\n'
-                |   name: '#{loginName}',
-                = '\n'
-                = '\n'
-                = '  // [optional][string]\n'
-                = '  // Used module names, default is:\n'
-                = '  //   `base,details,stats,repos,contributions,orgs`.\n'
-                = '  // You can change the order or remove module if you don\'t want.\n'
-                = '  // modules: \'base,details,stats,repos,orgs,eventsStatis\',\n'
-                = '\n'
-                = '  // [optional][number] Number of repos to be shown.\n'
-                = '  // `3` as default\n'
-                = '  // reposNum: 4,\n'
-                = '\n'
-                = '  // [optional][number] Number of organizations to be shown.\n'
-                = '  // `-1` as default, represent showing all organizations.\n'
-                = '  // orgsNum: -1,\n'
-                = '\n'
-                = '  // [optional][string|Element]\n'
-                = '  // element or elementId, `octocard` as default.\n'
-                = '  // element: \'octocard\',\n'
-                = '\n'
-                = '  // [optional][string]url of jsonp api\n'
-                = '  // `http://octocard.info/api` as default.\n'
-                |   // If your use your own 
-                a(href="https://github.com/zmmbreeze/octocard-server", target="_blank")
-                    | octocard-server
-                | , change it.
-                = '\n'
-                = '  // api: \'http://your-octocard-server.com/api\'\n'
-                = '};\n'
-                = '</script>\n'
-                = '<script src="http://nodejs.in/octocard/bin/octocard.js"></script>'
+    p#step-1
+        if (!logined)
+            | 1. 
+            a.loginBtn(href="/login?next_step=1") Login/Sign Up with Github
+    p#step-2
+        if (!logined)
+            | 2. 
+        | Customize and copy the following html code to your website.
+        pre.prettyprint.lang-html: code
+            = '<div id="octocard"></div>\n'
+            = '<script>\n'
+            = 'OCTOCARD = {\n'
+            = '  // [required][string] Username.\n'
+            |   name: '#{loginName}',
+            = '\n'
+            = '\n'
+            = '  // [optional][string]\n'
+            = '  // Used module names, default is:\n'
+            = '  //   `base,details,stats,repos,contributions,orgs`.\n'
+            = '  // You can change the order or remove module if you don\'t want.\n'
+            = '  // modules: \'base,details,stats,repos,orgs,eventsStatis\',\n'
+            = '\n'
+            = '  // [optional][number] Number of repos to be shown.\n'
+            = '  // `3` as default\n'
+            = '  // reposNum: 4,\n'
+            = '\n'
+            = '  // [optional][number] Number of organizations to be shown.\n'
+            = '  // `-1` as default, represent showing all organizations.\n'
+            = '  // orgsNum: -1,\n'
+            = '\n'
+            = '  // [optional][string|Element]\n'
+            = '  // element or elementId, `octocard` as default.\n'
+            = '  // element: \'octocard\',\n'
+            = '\n'
+            = '  // [optional][string]url of jsonp api\n'
+            = '  // `http://octocard.info/api` as default.\n'
+            |   // If your use your own 
+            a(href="https://github.com/zmmbreeze/octocard-server", target="_blank")
+                | octocard-server
+            | , change it.
+            = '\n'
+            = '  // api: \'http://your-octocard-server.com/api\'\n'
+            = '};\n'
+            = '</script>\n'
+            = '<script src="http://nodejs.in/octocard/bin/octocard.js"></script>'
 
     h2 Safety?
     ul
