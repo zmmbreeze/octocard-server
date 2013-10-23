@@ -34,6 +34,18 @@ oauth.login = function(req, res) {
     res.redirect(302, authUrl);
 };
 
+oauth.unlogin = function(req, res) {
+    req.session.destroy(function (err) {
+        if (err) {
+            winston.error(err);
+            return;
+        }
+
+        console.log(req.header('referer') || '/');
+        res.redirect(302, req.header('referer') || '/');
+    });
+};
+
 oauth.callback = function(req, res) {
     var gotoNextStep = req.session.gotoNextStep;
     req.session.gotoNextStep = null;
@@ -80,5 +92,6 @@ oauth.callback = function(req, res) {
 module.exports = function (app) {
     app.get('/login', oauth.login);
     app.get('/auth', oauth.callback);
+    app.get('/unlogin', oauth.unlogin);
 };
 
