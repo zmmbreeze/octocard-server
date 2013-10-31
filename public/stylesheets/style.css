@@ -1,7 +1,7 @@
 body {
     margin: 0 auto;
     padding: 1em;
-    max-width: 640px;
+    width: 640px;
     font: 16px "Libre Baskerville", "Lucida Grande", Helvetica, Arial, sans-serif;
     color: #666;
 }
@@ -94,6 +94,15 @@ a:hover {
         1px 2px 1px #4A89DC;
 }
 
+.example {
+    overflow: hidden;
+}
 #octocard {
+    float: left;
     width: 300px !important;
+}
+
+#octocardEditor {
+    float: right;
+    width: 320px;
 }

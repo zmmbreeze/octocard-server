@@ -17,7 +17,9 @@ block content
             a(href="https://github.com/zmmbreeze/octocard-server") Octocard server.
 
     h2 Example
-    div#octocard
+    div.example
+        div#octocard
+        div#octocardEditor
 
     h2 How to use
     p#step-1
@@ -86,11 +88,7 @@ block content
 
     <a href="https://github.com/zmmbreeze/octocard"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
 
-    script.
-        OCTOCARD = {
-            name: 'zmmbreeze',
-            api: '/api'
-        };
     script(src="http://nodejs.in/octocard/bin/octocard.js")
+    script(src="./javascript/index.js")
     script(src="http://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js")
     script prettyPrint();
