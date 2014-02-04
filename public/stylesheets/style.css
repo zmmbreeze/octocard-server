@@ -1,7 +1,6 @@
 body {
-    margin: 0 auto;
-    padding: 1em;
-    width: 640px;
+    margin: 0;
+    padding: 0;
     font: 16px "Libre Baskerville", "Lucida Grande", Helvetica, Arial, sans-serif;
     color: #666;
 }
@@ -15,6 +14,20 @@ h2 {
 h2 {
     font-size: 1.5em;
     line-height: 32px;
+}
+h1 {
+    margin: 1em 0 0 0;
+    height: 64px;
+    line-height: 64px;
+    color: #4A89DC;
+}
+h1 img {
+    float: left;
+    margin-right: 10px;
+    margin-top: 5px;
+    _display: inline;
+    width: 54px;
+    height: 54px;
 }
 
 p {
@@ -39,6 +52,23 @@ a {
 }
 a:hover {
     text-decoration: underline;
+}
+
+.container {
+    margin: 0 auto;
+    padding: 1em;
+    width: 640px;
+}
+
+.banner {
+    overflow: hidden;
+    color: #FFF;
+    background-color: #4A89DC;
+    border-top: 1px solid #3082EE;
+    border-bottom: 1px solid #3082EE;
+}
+.banner a {
+    color: #FFF;
 }
 
 .prettyprint {
