@@ -72,7 +72,7 @@ a:hover {
 }
 
 .prettyprint {
-    padding: 0 !important;
+    padding: 1em 0 !important;
     margin: 0 !important;
     overflow: auto !important;
     border: none !important;

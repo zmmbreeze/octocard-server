@@ -33,45 +33,10 @@ block content
                 | 2. 
             | Customize and copy the following html code to your website.
             pre.prettyprint.lang-html: code
-                = '<script>\n'
-                = 'OCTOCARD = {\n'
-                = '  // [required][string] Username.\n'
-                |   name: '#{loginName}',
-                = '\n'
-                = '\n'
-                = '  // [optional][string]\n'
-                = '  // Used module names, default is:\n'
-                = '  //   `base,details,stats,repos,contributions,orgs`.\n'
-                = '  // You can change the order or remove module if you don\'t want.\n'
-                = '  // modules: \'base,details,stats,repos,orgs,eventsStatis\',\n'
-                = '\n'
-                = '  // [optional][number] Number of repos to be shown.\n'
-                = '  // `3` as default\n'
-                = '  // reposNum: 4,\n'
-                = '\n'
-                = '  // [optional][number] Number of organizations to be shown.\n'
-                = '  // `-1` as default, represent showing all organizations.\n'
-                = '  // orgsNum: -1,\n'
-                = '\n'
-                = '  // [optional][string|Element]\n'
-                = '  // element or elementId, `octocard` as default.\n'
-                = '  // element: \'octocard\',\n'
-                = '\n'
-                = '  // [optional][string]url of jsonp api\n'
-                = '  // `http://octocard.info/api` as default.\n'
-                |   // If your use your own 
-                a(href="https://github.com/zmmbreeze/octocard-server", target="_blank")
-                    | octocard-server
-                | , change it.
-                = '\n'
-                = '  // api: \'http://your-octocard-server.com/api\',\n'
-                = '\n'
-                = '  // [optional][boolean]show footer or not\n'
-                = '  // \'false\' as default\n'
-                = '  // noFooter: false\n'
-                = '};\n'
-                = '</script>\n'
-                = '<script src="http://nodejs.in/octocard/bin/octocard.js"></script>'
+                = '<script '
+                | data-name="#{loginName}"
+                = ' src="http://nodejs.in/octocard/bin/octocard.js"></script>'
+            | More advanced tips? Checkout on <a href="https://github.com/zmmbreeze/octocard/">github</a>.
 
         h2 Safety?
         ul
@@ -83,7 +48,7 @@ block content
         h2 More!
         ul
             li Customize 
-                a(href="https://github.com/zmmbreeze/octocard") Octocard theme.
+                a(href="https://github.com/zmmbreeze/octocard#how-to-customize-theme") Octocard theme.
             li Build your own 
                 a(href="https://github.com/zmmbreeze/octocard-server") Octocard server.
             li More features coming soon!
