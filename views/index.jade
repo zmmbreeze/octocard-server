@@ -53,7 +53,16 @@ block content
     <a href="https://github.com/zmmbreeze/octocard"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
 
     script(src="http://nodejs.in/octocard/bin/octocard.js")
-    script(src="./javascript/index.js")
+    if (!logined)
+        script
+            octocard({
+                name: 'zmmbreeze'
+            });
+    else
+        script
+            octocard({
+                name: '#{loginName}'
+            });
     script
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
