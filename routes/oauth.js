@@ -24,7 +24,7 @@ oauth.login = function(req, res) {
             id: nconf.get('github:clientId'),
             secret: nconf.get('github:clientSecret')
         })
-        .login(['user', 'public_repo']);
+        .login([]);
     // Store info to verify against CSRF
     req.session.authState = authUrl.match(/&state=([0-9a-z]{32})/i)[1];
     if (gotoNextStep) {
