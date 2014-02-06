@@ -73,16 +73,20 @@ a:hover {
     color: #FFF;
 }
 
-.prettyprint {
-    padding: 1em 0 !important;
-    margin: 0 !important;
-    overflow: auto !important;
-    border: none !important;
+.sample-code {
+    padding: 7px 16px;
+    line-height: 16px;
+    font-family: monospace;
     font-size: 14px;
+    white-space: pre-wrap;
+    background-color: #f7f7f9;
+    border-top: 1px solid #e1e1e8;
+    border-bottom: 1px solid #e1e1e8;
 }
-.prettyprint a .com {
-    color: #4A89DC;
-}
+.String { color: rgb(3, 106, 7); }
+.Keyword { color: rgb(0, 22, 142); }
+.Statement { color: rgb(0, 22, 142); }
+.Type { color: #000; }
 
 .btn,
 .loginBtn {

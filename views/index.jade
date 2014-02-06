@@ -1,7 +1,6 @@
 extends layout
 
 block content
-    link(rel="stylesheet", href="http://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.min.css")
     div.banner
         div.container
             h1 #{title}
@@ -14,6 +13,7 @@ block content
                 li Almost no <a href="http://developer.github.com/v3/#rate-limiting" >Rate Limiting</a> of Github api by using server cache
                 li Open source, you can even build your own 
                     a(href="https://github.com/zmmbreeze/octocard-server") Octocard server
+            <iframe src="http://ghbtns.com/github-btn.html?user=zmmbreeze&repo=octocard&type=watch&count=true&size=large" allowtransparency="true" frameborder="0" scrolling="0" width="152px" height="30px"></iframe>
             a(href="https://twitter.com/share", class="twitter-share-button", data-text="Octocard - Highly flexible github info card for every github lover.", data-size="large", data-related="zhoumm", data-hashtags="Octocard", data-url="http://octocard.info/") Tweet
             script.
                 !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
@@ -48,10 +48,8 @@ block content
             if (!logined)
                 | 2. 
             | Copy the following html code to your website.
-            pre.prettyprint.lang-html: code
-                = '<script '
-                | data-name="#{loginName}"
-                = ' src="http://nodejs.in/octocard/bin/octocard.js"></script>'
+            pre.sample-code
+                <span class="Keyword">&lt;</span><span class="Statement">script</span><span class="Keyword"> </span><span class="Type">data</span><span class="Keyword">-</span><span class="Type">name</span><span class="Keyword">=</span><span class="String">&quot;#{loginName}&quot;</span><span class="Keyword"> </span><span class="Type">src</span><span class="Keyword">=</span><span class="String">&quot;http://nodejs.in/octocard/bin/octocard.js&quot;</span><span class="Keyword">&gt;</span><span class="Keyword">&lt;/</span><span class="Statement">script</span><span class="Keyword">&gt;</span>
             | Or 
             a(href="#editor") customize 
             | your own octocard if you want.
@@ -87,5 +85,3 @@ block content
         })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
         ga('create', 'UA-47773457-1', 'octocard.info');
         ga('send', 'pageview');
-    script(src="http://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js")
-    script prettyPrint();
