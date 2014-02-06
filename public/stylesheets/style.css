@@ -74,6 +74,7 @@ a:hover {
 }
 
 .sample-code {
+    position: relative;
     padding: 7px 16px;
     line-height: 16px;
     font-family: monospace;
@@ -82,6 +83,9 @@ a:hover {
     background-color: #f7f7f9;
     border-top: 1px solid #e1e1e8;
     border-bottom: 1px solid #e1e1e8;
+}
+.sample-code p {
+    margin: 0;
 }
 .String { color: rgb(3, 106, 7); }
 .Keyword { color: rgb(0, 22, 142); }
@@ -172,4 +176,14 @@ a:hover {
     margin-top: 1em;
     margin-right: 1em;
     padding: 5px 10px;
+}
+
+.copy {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: none;
+    padding: 5px 10px;
+    color: #333;
+    background: #e1e1e8;
 }

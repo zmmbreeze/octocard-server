@@ -43,4 +43,19 @@
             api: '/api'
         });
     };
+
+    window.onload = function () {
+        var copy = document.getElementById('copy');
+        var client = new ZeroClipboard(copy, {
+            moviePath: 'http://cdnjs.cloudflare.com/ajax/libs/zeroclipboard/1.3.1/ZeroClipboard.swf'
+        });
+        client.on('load', function(client) {
+            var sampleCode = document.getElementById('sampleCode');
+            client.setText(sampleCode.innerText || sampleCode.textContent);
+            copy.style.display = 'block';
+            client.on('complete', function(client, args) {
+                alert('Copied! Paste them into your html file.');
+            });
+        });
+    };
 })(octocard);

@@ -38,7 +38,6 @@ block content
                 a(href="javascript:void 0;")#preview.btn Preview
                 a(href="https://github.com/zmmbreeze/octocard#how-to-use", target="_blank") More tips
 
-
         h2 How to use
         p#step-1
             if (!logined)
@@ -49,7 +48,9 @@ block content
                 | 2. 
             | Copy the following html code to your website.
             pre.sample-code
-                <span class="Keyword">&lt;</span><span class="Statement">script</span><span class="Keyword"> </span><span class="Type">data</span><span class="Keyword">-</span><span class="Type">name</span><span class="Keyword">=</span><span class="String">&quot;#{loginName}&quot;</span><span class="Keyword"> </span><span class="Type">src</span><span class="Keyword">=</span><span class="String">&quot;http://nodejs.in/octocard/bin/octocard.js&quot;</span><span class="Keyword">&gt;</span><span class="Keyword">&lt;/</span><span class="Statement">script</span><span class="Keyword">&gt;</span>
+                a(href="javascript:void 0;")#copy.copy copy
+                p#sampleCode
+                    <span class="Keyword">&lt;</span><span class="Statement">script</span><span class="Keyword"> </span><span class="Type">data</span><span class="Keyword">-</span><span class="Type">name</span><span class="Keyword">=</span><span class="String">&quot;#{loginName}&quot;</span><span class="Keyword"> </span><span class="Type">src</span><span class="Keyword">=</span><span class="String">&quot;http://nodejs.in/octocard/bin/octocard.js&quot;</span><span class="Keyword">&gt;</span><span class="Keyword">&lt;/</span><span class="Statement">script</span><span class="Keyword">&gt;</span>
             | Or 
             a(href="#editor") customize 
             | your own octocard if you want.
@@ -85,3 +86,4 @@ block content
         })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
         ga('create', 'UA-47773457-1', 'octocard.info');
         ga('send', 'pageview');
+    script(src="//cdnjs.cloudflare.com/ajax/libs/zeroclipboard/1.3.1/ZeroClipboard.min.js")
