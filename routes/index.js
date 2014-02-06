@@ -8,6 +8,7 @@ var index = function (req, res) {
     res.render('index', {
         title: 'Octocard',
         loginName: req.session.loginName || 'your github username',
+        usableLoginName: req.session.loginName || 'zmmbreeze',
         logined: !!req.session.loginName
     });
 };

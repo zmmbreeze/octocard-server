@@ -84,6 +84,7 @@ a:hover {
     color: #4A89DC;
 }
 
+.btn,
 .loginBtn {
     margin-bottom: 6px;
     display: inline-block;
@@ -91,6 +92,8 @@ a:hover {
     line-height: 24px;
     color: #FFF;
     background-color: #5D9CEC;
+}
+.loginBtn {
     -webkit-box-shadow: 1px 0px 1px #4A89DC,
         2px 1px 1px #4A89DC,
         3px 2px 1px #4A89DC,
@@ -108,6 +111,7 @@ a:hover {
         2px 3px 1px #4A89DC,
         3px 4px 1px #4A89DC;
 }
+.btn:hover,
 .loginBtn:hover {
     background-color: #4A89DC;
     text-decoration: none;
@@ -134,7 +138,34 @@ a:hover {
     width: 300px !important;
 }
 
-#octocardEditor {
+.octocard-editor {
     float: right;
     width: 320px;
+}
+.editor-footer {
+    padding: 5px 1em;
+    font-size: 14px;
+    background: #DDD;
+}
+.editor-footer code {
+    padding: 0.15em 0.25em;
+    font: monospace;
+    background: #FEE9CC;
+}
+#editor {
+    height: 160px;
+    font: 14px monospace;
+    border: 2px solid #DDD;
+}
+#editor:target {
+    border-color: #4A89DC;
+}
+#editor:target + .editor-footer {
+    color: #FFF;
+    background: #4A89DC;
+}
+#preview {
+    margin-top: 1em;
+    margin-right: 1em;
+    padding: 5px 10px;
 }
