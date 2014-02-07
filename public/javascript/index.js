@@ -39,7 +39,6 @@
             name: get('name'),
             modules: robustModules.join(','),
             reposNum: get('reposNum'),
-            orgsNum: get('orgsNum'),
             api: '/api'
         });
     };
