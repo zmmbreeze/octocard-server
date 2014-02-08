@@ -310,7 +310,7 @@ userSchema.statics.getReposData = function (loginName) {
             var promise = githubApi.getReposData(user);
 
             if (reposData && reposData.data && reposData.saveTime) {
-                // use old orgsData if exist
+                // use old reposData if exist
                 return reposData.data;
             } else {
                 // no data, use promise
