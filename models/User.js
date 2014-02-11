@@ -51,7 +51,7 @@ userSchema.statics.findByLogin = function (loginName) {
         .then(function (user) {
             if (!user) {
                 throw new Error('Login name not found. '
-                                + 'Please sign up Github Card first.');
+                                + 'Please sign up Octocard.');
             }
 
             return user;
