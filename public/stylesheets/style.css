@@ -62,7 +62,8 @@ a:hover {
 }
 
 .banner {
-    padding: 3em 0 1em;
+    padding: 3em 1em 1em;
+    min-width: 640px;
     overflow: hidden;
     color: #FFF;
     background-color: #4A89DC;
