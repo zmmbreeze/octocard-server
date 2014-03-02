@@ -191,7 +191,28 @@ var githubApi = {
      * @return {Object} promise .
      */
     getReposData: function (user) {
-        return Q.ninvoke(github.client(user.token).me(), 'repos')
+        var page = 1;
+        var results = [];
+
+        // get all repos data
+        function getAllRepos() {
+            var apiUrl = '/users/' + user.login + '/repos';
+            return Q.ninvoke(github.client(user.token), 'get', apiUrl, page)
+                .spread(function (status, repos, header) {
+                    helper.concatArray(results, repos);
+
+                    var link = header.link;
+                    // if has next page
+                    if (~link.indexOf('rel="next"')) {
+                        page++;
+                        return getAllRepos();
+                    } else {
+                        return results;
+                    }
+                });
+        }
+
+        return getAllRepos()
             .then(function (data) {
                 user.reposData = {
                     data: data,
