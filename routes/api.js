@@ -12,7 +12,7 @@ var winston = require('winston');
 var usefulDataKeysMap = {
     base: [
         'login', 'name', 'avatar_url', 'html_url',
-        'followers', 'following', 'public_gists',
+        'followers', 'following', 'public_gists', 'public_repos',
         'bio', 'email', 'blog', 'location', 'company'
     ],
     repos: ['name', 'html_url', 'description', 'watchers_count'],
