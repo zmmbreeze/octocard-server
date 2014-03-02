@@ -12,3 +12,4 @@ How to build
 6. `cp config-sample.json config.json`
 7. Put github Client ID and Client Secret into config.json.
 8. `node app.js`
+9. Open [http://localhost:8080/](http://localhost:8080/) in your favourite browser.
