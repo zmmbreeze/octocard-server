@@ -10,6 +10,7 @@ var mongoose = require('mongoose');
 var winston = require('winston');
 var nconf = require('nconf');
 var Schema = mongoose.Schema;
+var helper = require('../helper/helper');
 
 // all data's time to live
 var ttl = nconf.get('dataTTL');
@@ -110,17 +111,6 @@ var githubApi = {
     getAllEventsData: function (user) {
         var page = 1;
         var results = [];
-        /**
-         * concat array without create new array
-         * but src array will become useless.
-         * @param {Array} a target array.
-         * @param {Array} b src array.
-         */
-        var concatArray = function (a, b) {
-            b.unshift(0);
-            b.unshift(a.length);
-            Array.prototype.splice.apply(a, b);
-        };
 
         // get all events data
         // github event api only can get 300 latest events.
@@ -128,7 +118,7 @@ var githubApi = {
             var apiUrl = '/users/' + user.login + '/events';
             return Q.ninvoke(github.client(user.token), 'get', apiUrl, page)
                 .spread(function (status, events, header) {
-                    concatArray(results, events);
+                    helper.concatArray(results, events);
 
                     var link = header.link;
                     // if has next page
