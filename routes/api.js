@@ -126,6 +126,7 @@ module.exports = function (app) {
                 success: false,
                 message: '`login` or `mods` query not found.'
             });
+            return;
         }
 
         // init
