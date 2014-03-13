@@ -122,7 +122,7 @@ var githubApi = {
 
                     var link = header.link;
                     // if has next page
-                    if (~link.indexOf('rel="next"')) {
+                    if (link && ~link.indexOf('rel="next"')) {
                         page++;
                         return getAllEvents();
                     } else {
@@ -203,7 +203,7 @@ var githubApi = {
 
                     var link = header.link;
                     // if has next page
-                    if (~link.indexOf('rel="next"')) {
+                    if (link && ~link.indexOf('rel="next"')) {
                         page++;
                         return getAllRepos();
                     } else {
