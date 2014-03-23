@@ -109,29 +109,9 @@ var githubApi = {
      * @return {Object} promise
      */
     getAllEventsData: function (user) {
-        var page = 1;
-        var results = [];
+        var apiUrl = '/users/' + user.login + '/events';
 
-        // get all events data
-        // github event api only can get 300 latest events.
-        function getAllEvents() {
-            var apiUrl = '/users/' + user.login + '/events';
-            return Q.ninvoke(github.client(user.token), 'get', apiUrl, page)
-                .spread(function (status, events, header) {
-                    helper.concatArray(results, events);
-
-                    var link = header.link;
-                    // if has next page
-                    if (link && ~link.indexOf('rel="next"')) {
-                        page++;
-                        return getAllEvents();
-                    } else {
-                        return results;
-                    }
-                });
-        }
-
-        return getAllEvents()
+        return helper.getAllGithubData(user.token, apiUrl)
             .then(function (events) {
                 // count statistic
                 var statisData = {};
@@ -191,28 +171,9 @@ var githubApi = {
      * @return {Object} promise .
      */
     getReposData: function (user) {
-        var page = 1;
-        var results = [];
+        var apiUrl = '/users/' + user.login + '/repos';
 
-        // get all repos data
-        function getAllRepos() {
-            var apiUrl = '/users/' + user.login + '/repos';
-            return Q.ninvoke(github.client(user.token), 'get', apiUrl, page)
-                .spread(function (status, repos, header) {
-                    helper.concatArray(results, repos);
-
-                    var link = header.link;
-                    // if has next page
-                    if (link && ~link.indexOf('rel="next"')) {
-                        page++;
-                        return getAllRepos();
-                    } else {
-                        return results;
-                    }
-                });
-        }
-
-        return getAllRepos()
+        return helper.getAllGithubData(user.token, apiUrl)
             .then(function (data) {
                 user.reposData = {
                     data: data,
@@ -397,5 +358,6 @@ userSchema.statics.getEventsStatisData = function (loginName) {
 
 
 var User = module.exports = mongoose.model('User', userSchema);
+User.githubApi = githubApi;
 
 
