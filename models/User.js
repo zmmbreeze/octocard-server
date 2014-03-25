@@ -175,14 +175,7 @@ var githubApi = {
 
         return helper.getAllGithubData(user.token, apiUrl)
             .then(function (data) {
-                user.reposData = {
-                    data: data,
-                    saveTime: Date.now()
-                };
-                return Q.ninvoke(user, 'save');
-            })
-            .spread(function (user) {
-                return user.reposData.data;
+                return data;
             });
     },
     /**
@@ -203,6 +196,54 @@ var githubApi = {
             .spread(function (user) {
                 return user.orgsData.data;
             });
+    },
+    /**
+     * Get user's org's repos, which he can push.
+     *
+     * @param {User} user .
+     * @return {Object} promise .
+     */
+    getUserOrgReposData: function (user) {
+        // get all org's repos.
+        function getOrgsRepos(orgs) {
+            var promises = [];
+            orgs.forEach(function (org) {
+                promises.push(
+                    helper.getAllGithubData(
+                        user.token,
+                        '/orgs/' + org.login + '/repos'
+                    )
+                );
+            });
+
+            return Q.all(promises)
+                .then(function (orgsRepos) {
+                    // put repos into one array.
+                    var repos = [];
+                    orgsRepos.forEach(function (orgRepos) {
+                        orgRepos.forEach(function (repo) {
+                            if (repo.permissions.push) {
+                                repos.push(repo);
+                            }
+                        });
+                    });
+
+                    return Q.ninvoke(user, 'save')
+                        .then(function () {
+                            // still only return org repos
+                            return repos;
+                        });
+                });
+        }
+
+        if (!user.orgsData) {
+            var orgs = user.orgsData.data;
+            return getOrgsRepos(orgs);
+        }
+        else {
+            return githubApi.getOrgsData(user)
+                .then(getOrgsRepos);
+        }
     }
 };
 
@@ -277,9 +318,22 @@ userSchema.statics.getReposData = function (loginName) {
                 return reposData.data;
             }
 
+            console.log('reach new data');
             // if cache outof time
             // get the newest data
-            var promise = githubApi.getReposData(user);
+            var promiseForRepo = githubApi.getReposData(user);
+            var promiseForOrgRepo = githubApi.getUserOrgReposData(user);
+            var promise = Q.spread(promiseForRepo, promiseForOrgRepo)
+                .then(function (repos, orgRepos) {
+                    helper.concatArray(repos, orgRepos);
+                    // update & save org repos
+                    user.reposData = {
+                        data: repos,
+                        saveTime: Date.now()
+                    };
+                    return repos;
+                });
+
 
             if (reposData && reposData.data && reposData.saveTime) {
                 // use old reposData if exist

@@ -9,8 +9,7 @@ var github = require('octonode');
 
 var helper = module.exports = {
     /**
-     * concat array without create new array
-     * but src array will become useless.
+     * concat array without create new array.
      * @param {Array} a target array.
      * @param {Array} b src array.
      */
@@ -18,22 +17,27 @@ var helper = module.exports = {
         b.unshift(0);
         b.unshift(a.length);
         Array.prototype.splice.apply(a, b);
+        b.shift();
+        b.shift();
     },
     /**
      * Get all pages of github data.
      *
      * @param {string} token .
      * @param {string} url api url.
-     * @param {number} pageSize .
+     * @param {Object=} params .
      * @return {Object} promise .
      */
-    getAllGithubData: function (token, url, pageSize) {
+    getAllGithubData: function (token, url, params) {
         var page = 1;
         var results = [];
+        params = params || {};
+        params.page = page;
+        params.per_page = params.per_page || 100;
 
-        pageSize = pageSize || 100;
         function getAllData() {
-            return Q.ninvoke(github.client(token), 'get', url, page, pageSize)
+            params.page = page;
+            return Q.ninvoke(github.client(token), 'get', url, params)
                 .spread(function (status, data, header) {
                     helper.concatArray(results, data);
 
