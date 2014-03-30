@@ -3,6 +3,7 @@
 /**
  * Module dependencies.
  */
+var Q = require('q');
 var express = require('express');
 var http = require('http');
 var path = require('path');
@@ -66,6 +67,8 @@ app.configure('development', function () {
     app.use(express.errorHandler());
     // logger config
     winston.add(winston.transports.Console);
+    // optimize stack message for debug
+    Q.longStackSupport = true;
 });
 
 /**

@@ -37,7 +37,7 @@ oauth.login = function(req, res) {
 oauth.unlogin = function(req, res) {
     req.session.destroy(function (err) {
         if (err) {
-            winston.error(err);
+            winston.error(err.stack);
             return;
         }
 
@@ -67,14 +67,14 @@ oauth.callback = function(req, res) {
     } else {
         Q.ninvoke(github.auth, 'login', values.code)
             .fail(function (err) {
-                winston.error(err.message);
+                winston.error(err.stack);
                 res.render('error', { error: err.message });
             })
             .done(function (token) {
                 // create user
                 User.createByToken(token)
                     .fail(function (err) {
-                        winston.error(err.message);
+                        winston.error(err.stack);
                         res.render('error', { error: err.message });
                     })
                     .done(function (user) {
