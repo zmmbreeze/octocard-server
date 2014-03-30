@@ -6,6 +6,10 @@
 
 var Q = require('q');
 var github = require('octonode');
+var nconf = require('nconf');
+
+// all data's time to live
+var ttl = nconf.get('dataTTL');
 
 var helper = module.exports = {
     /**
@@ -53,5 +57,17 @@ var helper = module.exports = {
         }
 
         return getAllData();
+    },
+    /**
+     * if data is outof date.
+     *
+     * @param {Object} infoData .
+     * @param {number} ttl .
+     * @return {boolean} .
+     */
+    isOutofDate: function (infoData) {
+        return !(infoData
+                && infoData.saveTime
+                && (Date.now() < (infoData.saveTime.getTime() + ttl)));
     }
 };
