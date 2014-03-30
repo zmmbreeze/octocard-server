@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "q": "~0.9.7",
-    "octonode": "~0.3.5",
+    "octonode": "~0.6.x",
     "express": "~3.4.0",
     "nconf": "~0.6.7",
     "mongoose": "~3.6.20",
