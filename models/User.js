@@ -77,7 +77,7 @@ userSchema.statics.createByToken = function (token) {
             // not exist, get new user info from github
             var ghme = github.client(token).me();
             return Q.ninvoke(ghme, 'info')
-                .then(function (data) {
+                .spread(function (data) {
                     var user = new User({
                         login: data.login,
                         token: token,
@@ -153,7 +153,7 @@ var githubApi = {
      */
     getUserData: function (user) {
         return Q.ninvoke(github.client(user.token).me(), 'info')
-            .then(function (data) {
+            .spread(function (data) {
                 user.userData = {
                     data: data,
                     saveTime: Date.now()
@@ -193,7 +193,7 @@ var githubApi = {
      */
     getOrgsData: function (user) {
         return Q.ninvoke(github.client(user.token).me(), 'orgs')
-            .then(function (data) {
+            .spread(function (data) {
                 user.orgsData = {
                     data: data,
                     saveTime: Date.now()
