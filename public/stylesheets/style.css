@@ -1,7 +1,7 @@
 body {
     margin: 0;
     padding: 0;
-    font: 16px "Libre Baskerville", "Lucida Grande", Helvetica, Arial, sans-serif;
+    font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
     color: #666;
 }
 
@@ -10,10 +10,12 @@ h2 {
     margin: 1em 0;
     font-size: 2em;
     line-height: 1em;
+    font-family: "Comic Sans MS";
 }
 h2 {
     font-size: 1.5em;
     line-height: 32px;
+    margin-bottom: 0.5em;
 }
 h1 {
     margin: 0;
@@ -58,12 +60,13 @@ a:hover {
 .container {
     margin: 0 auto;
     padding: 1em;
-    width: 640px;
+    width: 800px;
 }
 
 .banner {
+    position: relative;
     padding: 3em 1em 1em;
-    min-width: 640px;
+    min-width: 800px;
     overflow: hidden;
     color: #FFF;
     background-color: #4A89DC;
@@ -140,21 +143,32 @@ a:hover {
 }
 
 .example {
+    margin-top: 1em;
     overflow: hidden;
 }
-#octocard {
+.example-r h2,
+.example-l h2 {
+    margin-top: 0;
+}
+.example-l {
     float: left;
-    width: 300px !important;
+    width: 300px;
+    padding: 10px;
+    background: #F5F7FA;
+    background: repeating-linear-gradient(-45deg, #E6E9ED, #E6E9ED 5px, white 5px, white 10px);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.5) inset, 0 1px 1px #DDD;
+    border-radius: 2px;
+}
+.example-r {
+    float: right;
+    width: 460px;
 }
 
-.octocard-editor {
-    float: right;
-    width: 320px;
-}
 .editor-footer {
     padding: 5px 1em;
     font-size: 14px;
     background: #DDD;
+    line-height: 1.62;
 }
 .editor-footer code {
     padding: 0.15em 0.25em;

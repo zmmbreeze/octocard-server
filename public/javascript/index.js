@@ -1,60 +1,71 @@
 (function (octocard) {
-    octocard({
-        name: NAME,
-        api: '/api'
-    });
-
+    // editor
     var editor = ace.edit('editor');
     editor.renderer.setShowGutter(false);
     editor.getSession().setMode('ace/mode/html');
     var previewBtn = document.getElementById('preview');
     var octocardContainer = document.getElementById('octocard');
-    previewBtn.onclick = function () {
+
+    var configKeys = [
+        'name', 'element', 'modules',
+        'reposNum', 'reposIgnored', 'orgsNum',
+        'api', 'noFooter', 'noIsolated'
+    ];
+    var defaultValue = {
+        'api': '/api'
+    };
+    var avaliableModules = {
+        'base': 1,
+        'details': 1,
+        'stats': 1,
+        'repos': 1,
+        'eventsStatis': 1,
+        'orgs': 1
+    };
+    var valueUpdater = {
+        'modules': function (oldValue) {
+            var modules = oldValue.split(',');
+            var robustModules = [];
+            for (var i = 0, l = modules.length; i < l; i++) {
+                if (avaliableModules[modules[i]]) {
+                    robustModules.push(modules[i]);
+                }
+            }
+            return robustModules.join(',');
+        }
+    };
+
+    // read config value from codes by key
+    function getValue(key, code) {
+        var reg = new RegExp('data\\-' + key + '="([^"]+)"');
+        var r = code.match(reg);
+        if (r) {
+            return r[1];
+        }
+    }
+
+    // preview octocard
+    function preview() {
         octocardContainer.innerHTML = '';
+
         var code = editor.getValue();
-        function get(data) {
-            var reg = new RegExp('data\\-' + data + '="([^"]+)"');
-            var r = code.match(reg);
-            if (r) {
-                return r[1];
+        var config = {};
+
+        for (i = 0; i < configKeys.length; i++) {
+            var key = configKeys[i];
+            var value = getValue(key, code);
+            var updater = valueUpdater[key];
+            if (value) {
+                config[key] = updater ? updater(value) : value;
+            }
+            else {
+                config[key] = defaultValue[key];
             }
         }
 
-        var avaliableModules = {
-            'base': 1,
-            'details': 1,
-            'stats': 1,
-            'repos': 1,
-            'eventsStatis': 1,
-            'orgs': 1
-        };
-        var modules = get('modules').split(',');
-        var robustModules = [];
-        for (var i = 0, l = modules.length; i < l; i++) {
-            if (avaliableModules[modules[i]]) {
-                robustModules.push(modules[i]);
-            }
-        }
-        octocard({
-            name: get('name'),
-            modules: robustModules.join(','),
-            reposNum: get('reposNum'),
-            api: '/api'
-        });
-    };
+        octocard(config);
+    }
 
-    window.onload = function () {
-        var copy = document.getElementById('copy');
-        var client = new ZeroClipboard(copy, {
-            moviePath: 'http://cdnjs.cloudflare.com/ajax/libs/zeroclipboard/1.3.1/ZeroClipboard.swf'
-        });
-        client.on('load', function(client) {
-            var sampleCode = document.getElementById('sampleCode');
-            client.setText(sampleCode.innerText || sampleCode.textContent);
-            copy.style.display = 'block';
-            client.on('complete', function(client, args) {
-                alert('Copied! Paste them into your html file.');
-            });
-        });
-    };
+    previewBtn.onclick = preview;
+    preview();
 })(octocard);
