@@ -12,6 +12,11 @@ var winston = require('winston');
 
 var oauth = {};
 
+github.auth.config({
+    id: nconf.get('github:clientId'),
+    secret: nconf.get('github:clientSecret')
+});
+
 oauth.login = function(req, res) {
     var gotoNextStep = !!req.query.next_step;
     if (req.session.loginName) {
@@ -20,11 +25,7 @@ oauth.login = function(req, res) {
         return;
     }
     // oauth login url
-    var authUrl = github.auth.config({
-            id: nconf.get('github:clientId'),
-            secret: nconf.get('github:clientSecret')
-        })
-        .login([]);
+    var authUrl = github.auth.login([]);
     // Store info to verify against CSRF
     req.session.authState = authUrl.match(/&state=([0-9a-z]{32})/i)[1];
     if (gotoNextStep) {
