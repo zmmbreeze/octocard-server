@@ -76,6 +76,7 @@ block content
     script(src="http://nodejs.in/octocard/bin/octocard.js")
     if (!logined)
         script.
+            document.getElementById('octocard').innerHTML = '';
             octocard({
                 name: 'zmmbreeze',
                 reposNum: 5
