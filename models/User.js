@@ -78,19 +78,30 @@ userSchema.statics.createByToken = function (token) {
             var ghme = github.client(token).me();
             return Q.ninvoke(ghme, 'info')
                 .spread(function (data) {
-                    var user = new User({
-                        login: data.login,
-                        token: token,
-                        userData: {
-                            data: data,
-                            saveTime: Date.now()
-                        }
-                    });
+                    // find user by login, if exist
+                    return Q.ninvoke(that, 'findOne', {login: data.login})
+                        .then(function (user) {
+                            if (!user) {
+                                // no exist user, create new user
+                                user = new User({
+                                    login: data.login,
+                                    token: token,
+                                    userData: {
+                                        data: data,
+                                        saveTime: Date.now()
+                                    }
+                                });
+                            }
+                            else {
+                                // user existed, update user token.
+                                user.token = token;
+                            }
 
-                    return Q.ninvoke(user, 'save');
+                            return Q.ninvoke(user, 'save');
+                        });
                 })
                 .spread(function (user) {
-                    // get other data
+                    // when user login, get/update other data
                     // to make server response faster
                     var loginName = user.login;
                     that.getReposData();
