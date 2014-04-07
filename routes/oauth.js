@@ -42,7 +42,6 @@ oauth.unlogin = function(req, res) {
             return;
         }
 
-        console.log(req.header('referer') || '/');
         res.redirect(302, req.header('referer') || '/');
     });
 };
