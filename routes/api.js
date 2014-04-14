@@ -53,7 +53,7 @@ var filterData = function (moduleName, data) {
  */
 var rejectGetDataError = function (data) {
     return function (err) {
-        winston.error(err.stack);
+        winston.error(err.stack || err);
         data.success = false;
         data.message = err.message;
     };
