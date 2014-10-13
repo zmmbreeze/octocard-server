@@ -202,3 +202,39 @@ a:hover {
     color: #333;
     background: #e1e1e8;
 }
+
+.alert {
+    margin: 1em 0 2em;
+    border: 1px solid #ebccd1;
+    border-radius: 4px;
+}
+.alert-txt {
+    padding: 1em;
+    color: #a94442;
+    background-color: #f2dede;
+    border: 1px solid #FFF;
+    border-radius: 4px;
+}
+.alert a {
+    color: #a94442;
+}
+.alert-transform {
+    margin: 0;
+    padding: 14px;
+    background-color: #FFF;
+}
+.alert-transform pre {
+    margin: 0;
+    font-size: 14px;
+}
+
+.alert-transform .minus,
+.alert-transform .plus {
+    display: block;
+    margin: 0 -14px;
+    text-indent: 14px;
+    background-color: #ffecec;
+}
+.alert-transform .plus {
+    background-color: #eaffea;
+}
