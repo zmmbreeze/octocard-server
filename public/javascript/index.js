@@ -7,7 +7,7 @@
     var octocardContainer = document.getElementById('octocard');
 
     var configKeys = [
-        'name', 'element', 'modules',
+        'name', 'element', 'modules', 'theme',
         'reposNum', 'reposIgnored', 'orgsNum',
         'api', 'noFooter', 'noIsolated'
     ];
