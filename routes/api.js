@@ -4,6 +4,8 @@
  * GET api url.
  */
 
+var fs = require('fs');
+var path = require('path');
 var Q = require('q');
 var User = require('../models/User');
 var winston = require('winston');
@@ -114,10 +116,29 @@ var getDataFuncMap = {
     }
 };
 
-module.exports = function (app) {
-    app.get('/api', function (req, res) {
-        res.type('application/javascript');
+// read all css themes into memory
+var availableThemes = {};
+(function () {
+    var themePath = __dirname + '/../themes/';
+    fs.readdirSync(themePath).forEach(function (filename){
+        filename = themePath + filename;
+        if (path.extname(filename) === '.css') {
+            var themeName = path.basename(filename, '.css');
+            availableThemes[themeName] = fs.readFileSync(filename, {
+                'encoding': 'UTF-8'
+            });
+        }
+    });
+})();
 
+/**
+ * methods to get response data.
+ */
+var responseMethods = {
+    /**
+     * response data.
+     */
+    data: function (req, res) {
         var loginName = req.query.login;
         var mods = req.query.mods;
         // check params
@@ -147,5 +168,36 @@ module.exports = function (app) {
             .done(function () {
                 res.jsonp(data);
             });
+    },
+    /**
+     * response theme file.
+     */
+    theme: function (req, res) {
+        var themeName = req.query.name || 'default';
+        var file = availableThemes[themeName];
+        if (file) {
+            res.jsonp({
+                success: true,
+                data: {
+                    css: file
+                }
+            });
+        } else {
+            res.jsonp({
+                success: false,
+                message: 'theme name not found.'
+            });
+        }
+    }
+};
+
+module.exports = function (app) {
+    app.get('/api', function (req, res) {
+        res.type('application/javascript');
+
+        var dataType = req.query.dataType || 'data';
+        var responseMethod = responseMethods[dataType];
+        responseMethod(req, res);
     });
 };
+
