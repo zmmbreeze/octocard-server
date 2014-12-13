@@ -203,6 +203,24 @@ a:hover {
     background: #e1e1e8;
 }
 
+.themes {
+    margin: 1em 0 0;
+    width: 100%;
+    height: 755px;
+    overflow: hidden;
+}
+.themes div {
+    margin: 0;
+    width: 100%;
+    height: 775px;
+    overflow: scroll;
+    overflow-y: hidden;
+    overflow-x: scroll;
+}
+.themes img {
+    display: block;
+}
+
 .alert {
     margin: 1em 0 2em;
     border: 1px solid #ebccd1;
