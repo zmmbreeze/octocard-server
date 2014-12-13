@@ -206,13 +206,13 @@ a:hover {
 .themes {
     margin: 1em 0 0;
     width: 100%;
-    height: 755px;
+    height: 533px;
     overflow: hidden;
 }
 .themes div {
     margin: 0;
     width: 100%;
-    height: 775px;
+    height: 553px;
     overflow: scroll;
     overflow-y: hidden;
     overflow-x: scroll;
