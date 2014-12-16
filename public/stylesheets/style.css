@@ -1,16 +1,17 @@
 body {
     margin: 0;
     padding: 0;
-    font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
+    font: 16px "Roboto Slab", serif;
     color: #666;
 }
 
 h1,
 h2 {
     margin: 1em 0;
-    font-size: 2em;
     line-height: 1em;
-    font-family: "Comic Sans MS";
+    font-size: 2em;
+    font-weight: normal;
+    font-family: "Lobster", "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 h2 {
     font-size: 1.5em;
@@ -213,12 +214,14 @@ a:hover {
     margin: 0;
     width: 100%;
     height: 553px;
+    line-height: 533px;
     overflow: scroll;
     overflow-y: hidden;
     overflow-x: scroll;
+    text-align: center;
 }
 .themes img {
-    display: block;
+    display: inline-block;
 }
 
 .alert {
