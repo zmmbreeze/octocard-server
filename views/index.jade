@@ -3,7 +3,9 @@ extends layout
 block content
     div.banner
         div.container
-            h1 #{title}
+            h1
+                img(src="stylesheets/imgs/logo.png", alt="Octocard logo", height="127", width="127")
+                | #{title}
             p
                 | Highly flexible github card widget for every github lover. And it's open source. Please feel free to <a href="https://github.com/zmmbreeze/octocard">fork</a> and build your own <strong>Octocard</strong>.
             h2 Features
