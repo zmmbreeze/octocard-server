@@ -25,7 +25,7 @@ oauth.login = function(req, res) {
         return;
     }
     // oauth login url
-    var authUrl = github.auth.login([]);
+    var authUrl = github.auth.login(['read:org']);
     // Store info to verify against CSRF
     req.session.authState = authUrl.match(/&state=([0-9a-z]{32})/i)[1];
     if (gotoNextStep) {
